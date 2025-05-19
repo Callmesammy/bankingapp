@@ -17,31 +17,31 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 const SideItems = [
   {
     name: "Home", 
-    icons: <FaHome />, 
+    icons: <FaHome className="size-5"/>, 
     url: "/"
 }, 
 
 {
   name: "My Banks", 
-  icons: <LiaPiggyBankSolid />, 
+  icons: <LiaPiggyBankSolid className="size-5" />, 
   url: "/banks"
 }, 
 
 {
   name: "Transaction History", 
-  icons: <AiOutlineTransaction />  , 
+  icons: <AiOutlineTransaction className="size-5" />  , 
   url: "/history"
 }, 
 
 {
   name: "Payment Transfer", 
-  icons: <RiSecurePaymentFill />  , 
+  icons: <RiSecurePaymentFill className="size-5" />  , 
   url: "/transfer"
 }, 
 
 {
   name: "Connect Bank", 
-  icons: <GiMoneyStack />  , 
+  icons: <GiMoneyStack className="size-5"/>  , 
   url: "/connect"
 }, 
 
@@ -49,6 +49,8 @@ const SideItems = [
 
 
 const Sidebard = () => {
+  const user = "Samson";
+  const email = "callmesammy@yahoo.com"
   const pathname = usePathname()
 
   // homepage clicking to  refresh to homepage 
@@ -57,25 +59,32 @@ const Sidebard = () => {
 
   }
     return (
-        <div className="w-[14rem] h-full shadow-white shadow-lg sticky border-r border-r-muted-foreground  ">
-            <div className=" px-2 w-full justify-center space-y-6">
+        <div className="w-[14rem] mb-3 h-full shadow-white shadow-md relative border-r border-r-muted-foreground   ">
+            <div className="  px-2 w-full justify-center space-y-6">
               <Link onClick={()=>onPress("/")}  href={("/")} className="pt-3 flex space-x-1 w-full justify-start hover:scale-103">
                   <GrAd  className="size-7"/> <h1 className="font-semibold">JEtsY</h1>
 
               </Link>
               <Input placeholder="Search" className="flex w-[13rem] items-center-center px-3 focus-visible:ring-0"/>
-              <div className="gap-2 space-y-3">
+              <div className=" space-y-3">
                 {SideItems.map((doc, keys)=>{
                   const isActive = pathname === doc.url || pathname.startsWith(`${doc.url}/`)
                   return(
-                    <div key={keys} className={cn("w-full", isActive && " ")}> 
-                    
-                    </div>
+                    <Link href={doc.url} key={keys} className={cn("gap-2 w-full p-2 hover:bg-muted-foreground items-center rounded px-2 cursor-pointer h-full flex", isActive && "w-full bg-blue-700 flex gap-2 ")}> 
+                    {doc.icons}
+                    <h1 className="text-sm font-semibold">{doc.name}</h1>
+                    </Link>
                   )
                 })}
               </div>
+             
               </div>
-            
+             
+              <footer className=" px-3 flex-col absolute cursor-pointer mt-auto bottom-2 flex ">
+                <h1 className="text-md capitalize font-semibold">{user}</h1> 
+                <h1 className="text-sm capitalize text-muted-foreground">{email}</h1>
+
+              </footer>
         </div>
       );
 }

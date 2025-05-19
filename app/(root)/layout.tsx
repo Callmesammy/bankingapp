@@ -10,7 +10,7 @@ const LayoutPage = ({
     return ( 
         <div className="flex w-full h-full">
         <Sidebard/>
-            <main> 
+            <main className="flex w-full h-full "> 
             {children}
             </main>
         </div>
