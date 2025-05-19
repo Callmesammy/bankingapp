@@ -9,7 +9,7 @@ const LayoutPage = ({
 }: layoutProps) => {
     return ( 
         <div className="flex w-full h-full">
-            <Sidebard/>
+        <Sidebard/>
             <main> 
             {children}
             </main>
