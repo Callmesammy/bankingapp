@@ -1,3 +1,4 @@
+import Rightbar from "./_components/right-bar";
 import Sidebard from "./_components/sidebar-comp";
 
 interface layoutProps{
@@ -12,6 +13,7 @@ const LayoutPage = ({
         <Sidebard/>
             <main className="flex w-full h-full "> 
             {children}
+            <Rightbar/>
             </main>
         </div>
      );
