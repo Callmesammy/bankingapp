@@ -28,7 +28,7 @@ const formSchema = z.object({
 })
 
 
-const Login = () => {
+const Signup = () => {
   const [isLoading, setIsLoading] = useState(false)
       // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,15 +54,17 @@ const Login = () => {
   }
 
     return (
-        <div>
+        <div className="pt-3 ">
  <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <div className="w-full grid grid-cols-2 gap-3  ">
+
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>First Name</FormLabel>
               <FormControl>
                 <Input disabled={isLoading} type="email" required placeholder="email" {...field} />
               </FormControl>
@@ -75,18 +77,89 @@ const Login = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input disabled={isLoading} required type="password" placeholder="Password" {...field} />
+                <Input disabled={isLoading} required  placeholder="Last name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+              </div>
+              <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input disabled={isLoading} required  placeholder="Enter Address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+ <div className="w-full grid grid-cols-2 gap-3  ">
+
+<FormField
+  control={form.control}
+  name="email"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>State</FormLabel>
+      <FormControl>
+        <Input disabled={isLoading} type="email" required placeholder="email" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+   <FormField
+  control={form.control}
+  name="password"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Postal Code</FormLabel>
+      <FormControl>
+        <Input disabled={isLoading} required  placeholder="Last name" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+      </div>
+
+      <FormField
+  control={form.control}
+  name="email"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>State</FormLabel>
+      <FormControl>
+        <Input disabled={isLoading} type="email" required placeholder="email" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+<FormField
+  control={form.control}
+  name="email"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>State</FormLabel>
+      <FormControl>
+        <Input disabled={isLoading} type="email" required placeholder="email" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
         <Button type="submit" className="w-full bg-blue-700 hover:bg-sky-600 cursor-pointer font-semibold">Login {isLoading && <Loader2 className="animate-spin size-5"/>}</Button>
       </form>
     </Form>        </div>
       );
 }
  
-export default Login;
+export default Signup;
