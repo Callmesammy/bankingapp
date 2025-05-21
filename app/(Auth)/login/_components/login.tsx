@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -29,6 +31,7 @@ const formSchema = z.object({
 
 
 const Login = () => {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
       // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,10 +42,17 @@ const Login = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
+    const supabase = await createClient()
     try{
-
+      const {data, error} = await supabase.auth.signInWithPassword(values)
+        if(data){
+          console.log(data)
+          router.push("/linking")
+        } else if(error){
+          console.log("Invalid login credentials", error)
+        }
     }catch(error){
       console.error("something went wrong", error)
     }finally{
