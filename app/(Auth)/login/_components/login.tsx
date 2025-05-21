@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,11 +16,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
-import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import LogActionns from "../../confirm/actions"
 
-const formSchema = z.object({
+export const formSchema = z.object({
   email: z.string().min(2, {
     message: "Enter your emails"
   }),
@@ -44,17 +43,18 @@ const Login = () => {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    const supabase = await createClient()
+    setIsLoading(true)       
     try{
-      const {data, error} = await supabase.auth.signInWithPassword(values)
-        if(data){
-          console.log(data)
-          toast.success("/Successful")
-          router.push("/linking")
-        } else if(error){
-          console.log("Invalid login credentials", error)
-        }
+      const {data, error} = await LogActionns(values)
+      if(data){
+        console.log(data)
+        toast.success("Successful")
+        router.push("/linking")
+      }else{
+        console.log(error, "error")
+        toast.error(String("Something went wrong"))
+
+      }
     }catch(error){
       console.error("something went wrong", error)
     }finally{
@@ -95,7 +95,7 @@ const Login = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full bg-blue-700 hover:bg-sky-600 cursor-pointer font-semibold">Login {isLoading && <Loader2 className="animate-spin size-5"/>}</Button>
+        <Button disabled={isLoading} type="submit" className="w-full bg-blue-700 hover:bg-sky-600 cursor-pointer font-semibold">Login {isLoading && <Loader2 className="animate-spin size-5"/>}</Button>
       </form>
     </Form>        </div>
       );

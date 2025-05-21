@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,8 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { SignUpAccount } from "../../confirm/actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const formSchema = z.object({
+export const formSchemas = z.object({
   email: z.string().min(2, {
     message: "Enter your emails",
   }),
@@ -44,19 +46,29 @@ const formSchema = z.object({
 });
 
 const Signup = () => {
+    const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemas>>({
+    resolver: zodResolver(formSchemas),
     defaultValues: {
       email: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
+  async function onSubmit(values: z.infer<typeof formSchemas>) {
+    setIsLoading(true);           
     try {
+        const {data, error} = await SignUpAccount(values)
+        if(data){           
+            router.push("/linking")          
+            console.log(data)  
+            toast.success("Account Created Successfull")
+        }else{
+            console.error(String("Something Went wrong"), error)
+            toast.error("Something went wront try again later")
+        }
     } catch (error) {
       console.error("something went wrong", error);
     } finally {
