@@ -51,7 +51,7 @@ export  async function SignUpAccount(formData: z.infer<typeof formSchemas>): Pro
        
       
     
-    })
+    });
     if (data){
         console.log(data)
     }else{
