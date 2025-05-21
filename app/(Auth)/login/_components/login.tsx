@@ -19,6 +19,7 @@ import { useState } from "react"
 import { Loader2 } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -49,6 +50,7 @@ const Login = () => {
       const {data, error} = await supabase.auth.signInWithPassword(values)
         if(data){
           console.log(data)
+          toast.success("/Successful")
           router.push("/linking")
         } else if(error){
           console.log("Invalid login credentials", error)
